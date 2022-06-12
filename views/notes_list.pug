@@ -10,9 +10,10 @@ block content
             li.title= val.Title
             li.text= val.Text
             li.tag= "#" + val.Tags
+            a.edit(href=`/notes/update${val.Title}`)="EDIT"
             a.delete(href=`/notes/delete${val.Title}`)="DELETE"
     else
-        li There are no values
+        li No notes yet! Let's add some ↓
 
 
     h1 
