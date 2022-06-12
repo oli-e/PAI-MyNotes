@@ -3,4 +3,17 @@ extends layout
 block content
     h1 Hello, #{user}
     h2 Your Notes
-    // TODO: renderowanie listy notatek użytkownika
+    - var values = data;
+    ul
+    each val in values
+        .content
+            li.title= val.Title
+            li.text= val.Text
+            li.tag= "#" + val.Tags
+            a.delete(href=`/notes/delete${val.Title}`)="DELETE"
+    else
+        li There are no values
+
+
+    h1 
+    a.new-note(href="/notes/create")="+ Add new note"

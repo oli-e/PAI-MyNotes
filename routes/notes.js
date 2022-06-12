@@ -9,8 +9,14 @@ router.get('/', function(req, res, next) {
         var db = new sqlite3.Database('notes.db');
         let query = `SELECT Login FROM Users WHERE Id=${req.user_id}`;
         db.all(query, (err, rows) => {
-           const user_login = rows[0].Login;
-           res.render('notes_list', {user: user_login});
+            const user_login = rows[0].Login;
+            
+            let notes_query = `SELECT Title, Text, Tags FROM Notes WHERE "User ID"=${req.user_id}`;
+            db.all(notes_query, (err, data) => {
+                console.log(data);
+                console.log(req.user_id);
+                res.render('notes_list', {user: user_login, data: data});
+            });
         });
 
     }else{
@@ -37,6 +43,18 @@ router.post('/create', (req, res) => {
     db.run(query);
 
     // res.send("New note saved.");
+    res.redirect('/notes');
+});
+
+router.get('/delete:title', (req, res) => {
+
+    var db = new sqlite3.Database('notes.db');
+
+    console.log(req.params.title, req.user_id);
+    let query = `DELETE FROM Notes WHERE Title="${req.params.title}" AND "User ID"=${req.user_id};`;
+    db.run(query);
+
+    console.log("DELETE");
     res.redirect('/notes');
 });
 
