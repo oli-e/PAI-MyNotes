@@ -27,7 +27,6 @@ router.post('/login', (req, res) => {
                 const user_id = rows[0].Id;
 
                 const session_id = uuid.v4();
-                console.log(session_id);
 
                 var date = new Date();
                 date.setTime(Date.now() + 1000 * 1200);
@@ -66,13 +65,11 @@ router.post('/register', (req, res) => {
 
     db.all(query, (err, rows) => {
         num = rows[0]['SUM(Id)'] + 1;
-        console.log(num);
 
         let query_register = `INSERT INTO Users(Id, Login, Password) VALUES (${num}, "${user_name}", "${user_password}")`;
         db.run(query_register);
 
         const session_id = uuid.v4();
-        console.log(session_id);
 
         var date = new Date();
         date.setTime(Date.now() + 1000 * 1200);

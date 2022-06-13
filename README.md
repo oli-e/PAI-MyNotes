@@ -95,7 +95,6 @@ if (req.cookies.session) {
         var db = new sqlite3.Database('notes.db');
         let query = `SELECT UserId FROM Sessions WHERE UUID="${session_id}"`;
         db.all(query, (err, rows) => {
-            console.log(rows);
             if (rows.length == 1) {
                 req.user_id = rows[0].UserId;
                 req.authorized = true;
@@ -158,7 +157,6 @@ var db = new sqlite3.Database('notes.db');
         let notes_query = `SELECT Title, Text, Tags FROM Notes WHERE Title="${req.params.title}" AND "User ID"=${req.user_id}`;
         db.all(notes_query, (err, data) => {
             if (data.length >= 1) {
-                console.log(data);
                 if (new_title.length == 0) {
                     new_title = data[0].Title;
                 }
@@ -203,13 +201,11 @@ Dodanie do tabeli Users, od razu dodaje też do tabeli Sessions nową sesje świ
 
     db.all(query, (err, rows) => {
         num = rows[0]['SUM(Id)'] + 1;
-        console.log(num);
 
         let query_register = `INSERT INTO Users(Id, Login, Password) VALUES (${num}, "${user_name}", "${user_password}")`;
         db.run(query_register);
 
         const session_id = uuid.v4();
-        console.log(session_id);
 
         var date = new Date();
         date.setTime(Date.now() + 1000 * 1200);

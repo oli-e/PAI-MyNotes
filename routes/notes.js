@@ -91,7 +91,6 @@ router.post('/update:title', (req, res) => {
         let notes_query = `SELECT Title, Text, Tags FROM Notes WHERE Title="${req.params.title}" AND "User ID"=${req.user_id}`;
         db.all(notes_query, (err, data) => {
             if (data.length >= 1) {
-                console.log(data);
                 if (new_title.length == 0) {
                     new_title = data[0].Title;
                 }

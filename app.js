@@ -28,7 +28,6 @@ app.use('/', (req, res, next) => {
         var db = new sqlite3.Database('notes.db');
         let query = `SELECT UserId FROM Sessions WHERE UUID="${session_id}"`;
         db.all(query, (err, rows) => {
-            console.log(rows);
             if (rows.length == 1) {
                 req.user_id = rows[0].UserId;
                 req.authorized = true;
